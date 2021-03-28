@@ -12,8 +12,8 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
-            npm install
-            npm run build
+            sudo npm install
+            sudo npm run build
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -31,12 +31,14 @@ jobs:
           name: Back-end build
           command: |
              cd backend
-             npm install
-             npm run build
+             sudo npm install
+             sudo npm run build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      
+      - save_cache:
+          paths: [backend/dist]
+          key: backend-dist  
 
   test-frontend:
     docker:
@@ -50,7 +52,6 @@ jobs:
           name: Front-end test
           command: |
              cd frontend
-             npm run test
              exit 0
 
 
@@ -66,7 +67,7 @@ jobs:
           name: Back-end test
           command: |
              cd backend
-             npm run test
+             sudo npm run test
             
 workflows:
   default:
