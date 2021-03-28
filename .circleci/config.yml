@@ -33,6 +33,7 @@ jobs:
           name: Front-end test
           command: |
              cd frontend
+             npm run test
              exit 0
 
   build-backend:
