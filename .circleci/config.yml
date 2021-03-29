@@ -39,10 +39,8 @@ jobs:
       - save_cache:
           paths: [backend/dist]
           key: backend-dist  
-
   test-frontend:
     docker:
-      # Docker image here
       - image: circleci/node:13.8.0
     steps:
       - checkout
@@ -53,16 +51,13 @@ jobs:
           command: |
              cd frontend
              exit 0
-
-
   test-backend:
     docker:
-      # Docker image here
       - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-dist]
+          keys: [backend-build]
       - run:
           name: Back-end test
           command: |
