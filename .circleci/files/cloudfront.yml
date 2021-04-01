@@ -8,13 +8,11 @@ Parameters:
     Default: udapeople-kk1j287dhjppmz408
 
 Resources:
-  
   CloudFrontOriginAccessIdentity:
     Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: Origin Access Identity for Serverless Static Website
-
   WebpageCDN:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -31,7 +29,6 @@ Resources:
             QueryString: False
           TargetOriginId: webpage
           ViewerProtocolPolicy: allow-all
-
 Outputs:
   WorkflowID:
     Value: !Sub ${WorkflowID}
