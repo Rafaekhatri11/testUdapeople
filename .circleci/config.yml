@@ -133,20 +133,20 @@ jobs:
               --tags project=udapeople-frontend-<< pipeline.parameters.workflow-id >> \
               --stack-name "udapeople-frontend-<< pipeline.parameters.workflow-id >>" \
               --parameter-overrides ID="<< pipeline.parameters.workflow-id >>"  
-      - run:
-          working_directory: ./.circleci/ansible
-          name: Add back-end ip to ansible inventory
-          command: |
-            aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=udapeople-backend-<< pipeline.parameters.workflow-id >>" \
-              --output text >> inventory.txt
-            cat inventory.txt
-            ls -la
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .circleci/ansible/inventory.txt
+      # - run:
+      #     working_directory: ./.circleci/ansible
+      #     name: Add back-end ip to ansible inventory
+      #     command: |
+      #       aws ec2 describe-instances \
+      #         --query 'Reservations[*].Instances[*].PublicIpAddress' \
+      #         --filters "Name=tag:project,Values=udapeople-backend-<< pipeline.parameters.workflow-id >>" \
+      #         --output text >> inventory.txt
+      #       cat inventory.txt
+      #       ls -la
+      # - persist_to_workspace:
+      #     root: .
+      #     paths:
+      #       - .circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure
       - destroy_environment:
           id: <<pipeline.parameters.workflow-id>>
