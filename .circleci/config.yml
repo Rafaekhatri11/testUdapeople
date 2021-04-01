@@ -1,5 +1,10 @@
 version: 2.1
 
+executors:
+  aws:
+      docker:
+        - image: amazon/aws-cli
+
 parameters:
   workflow-id:
     type: string
