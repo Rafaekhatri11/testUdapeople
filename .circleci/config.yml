@@ -1,4 +1,10 @@
 version: 2.1
+
+parameters:
+  workflow-id:
+    type: string
+    default: "9767"
+
 orbs:
     slack: circleci/slack@4.1
 jobs:
