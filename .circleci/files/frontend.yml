@@ -22,7 +22,7 @@ Resources:
       Bucket: !Ref 'WebsiteBucket'
       PolicyDocument:
         Statement:
-        - Sid: PublicReadForGetBucketObjects
+        - Sid: PublicReadForGetOldWorkflowIDObjects
           Effect: Allow
           Principal: '*'
           Action: s3:GetObject
