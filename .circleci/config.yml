@@ -299,7 +299,7 @@ jobs:
           command: |
             aws s3 cp ./dist "s3://udapeople-<<pipeline.parameters.workflow-id>>" --recursive
       - save_cache:
-          paths: [frontend/dist]
+          paths: [frontend/dist]  
           key: frontend-dist
       # Here's where you will add some code to rollback on failure
       - destroy_environment:
