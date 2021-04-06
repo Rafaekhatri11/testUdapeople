@@ -302,12 +302,12 @@ jobs:
           paths: [frontend/dist]
           key: frontend-dist
       # Here's where you will add some code to rollback on failure
-      # - destroy_environment:
-      #     id: <<pipeline.parameters.workflow-id>>
-      #     when: on_fail
-      # - revert_migrations:
-      #     id: <<pipeline.parameters.workflow-id>>
-      #     when: on_fail    
+      - destroy_environment:
+          id: <<pipeline.parameters.workflow-id>>
+          when: on_fail
+      - revert_migrations:
+          id: <<pipeline.parameters.workflow-id>>
+          when: on_fail    
   deploy-backend:
     docker:
       - image: python:3.9.0-alpine
