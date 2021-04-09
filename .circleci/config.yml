@@ -361,19 +361,45 @@ jobs:
           name: Frontend smoke test.
           command: |
             URL="http://udapeoplebucket-<<pipeline.parameters.workflow-id>>.s3-website.us-east-1.amazonaws.com/index.html"
-            if curl -s ${URL} | grep "Welcome"
-            then
-            return 1
-            else
-            return 0
-            fi
+            curl -s ${URL} | grep -q "Welcome"
       # Here's where you will add some code to rollback on failure
-      - destroy_environment:
-          id: <<pipeline.parameters.workflow-id>>
-          when: on_fail
+      # - destroy_environment:
+      #     id: <<pipeline.parameters.workflow-id>>
+      #     when: on_fail
+      # - revert_migrations:
+      #     id: <<pipeline.parameters.workflow-id>>
+      #     when: on_fail   
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum install -y tar gzip curl
+            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+            yum install -y nodejs
+      - run:
+          name: Store old WorkflowID in memstash for cleanup phase
+          working_directory: ./.circleci/files
+          command: |
+            WorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+            curl -H "Content-Type: text/plain" -H "token: 4c1f091c-3eb6-4369-aad0-1a6732401eb4" --request PUT --data "$WorkflowID" https://api.memstash.io/values/WorkflowID
+      - run:
+          name: Update cloudfront distribution
+          working_directory: ./.circleci/files
+          command: |
+            aws cloudformation deploy \
+              --template-file cloudfront.yml \
+              --stack-name udapeople-cloudfront-production \
+              --parameter-overrides WorkflowID="<<pipeline.parameters.workflow-id>>" \
+              --tags project=udapeople
       - revert_migrations:
           id: <<pipeline.parameters.workflow-id>>
-          when: on_fail   
+          when: on_fail
 
 workflows:
   default:
@@ -403,3 +429,5 @@ workflows:
           requires: [run-migrations]
     - smoke-test:
           requires: [deploy-backend, deploy-frontend]
+    - cloudfront-update:
+          requires: [smoke-test]
