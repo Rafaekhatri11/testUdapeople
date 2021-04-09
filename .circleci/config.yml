@@ -313,8 +313,9 @@ jobs:
       - image: python:3.9.0-alpine
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints: ["42:e0:85:c8:a9:52:a1:95:12:7a:64:4a:7d:22:51:8b"]
+      - run:
+          name: Keyscan54.81.143.253 (HACK)
+          command: sudo ssh-keyscan -H 54.81.143.253 >> ~/.ssh/known_hosts
       - attach_workspace:
           at: .
       - run:
