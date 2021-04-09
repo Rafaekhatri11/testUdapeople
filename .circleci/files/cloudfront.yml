@@ -5,7 +5,7 @@ Parameters:
   WorkflowID:
     Description: Unique identifier.
     Type: String
-    Default: udapeople-kk1j287dhjppmz408
+    Default: udapeoplebucket-1010
 
 Resources:
   CloudFrontOriginAccessIdentity:
@@ -18,7 +18,7 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
-          - DomainName: !Sub "udapeople-${WorkflowID}.s3.amazonaws.com"
+          - DomainName: !Sub "udapeoplebucket-1010.s3.amazonaws.com"
             Id: webpage
             S3OriginConfig:
               OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
