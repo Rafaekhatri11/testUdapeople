@@ -5,7 +5,7 @@ Parameters:
   WorkflowID:
     Description: Unique identifier.
     Type: String
-    Default: udapeoplebucket-cloudfront
+    Default: udapeoplebucket-12345
 
 Resources:
   CloudFrontOriginAccessIdentity:
