@@ -397,9 +397,9 @@ jobs:
               --stack-name udapeople-cloudfront-production \
               --parameter-overrides WorkflowID="<<pipeline.parameters.workflow-id>>" \
               --tags project=udapeople
-      # - revert_migrations:
-      #     id: <<pipeline.parameters.workflow-id>>
-      #     when: on_fail
+      - revert_migrations:
+          id: <<pipeline.parameters.workflow-id>>
+          when: on_fail
   # cleanup:
   #   docker:
   #     - image: amazon/aws-cli
