@@ -396,7 +396,13 @@ jobs:
               --template-file cloudfront.yml \
               --stack-name udapeople-cloudfront-production \
               --parameter-overrides WorkflowID="<<pipeline.parameters.workflow-id>>" \
-              --tags project=udapeople
+              --tags project=udapeople &
+            if [[ "${STACKS[@}]}" =~ "${WorkflowID}" ]]
+            then
+              aws s3 rm "s3://udapeoplebucket-${WorlkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${WorkflowID}"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${WorkflowID}"
+            fi
       - revert_migrations:
           id: <<pipeline.parameters.workflow-id>>
           when: on_fail
