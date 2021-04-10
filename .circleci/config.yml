@@ -397,7 +397,7 @@ jobs:
               --stack-name udapeople-cloudfront-production \
               --parameter-overrides WorkflowID="<<pipeline.parameters.workflow-id>>" \
               --tags project=udapeople &
-            if [[ "${STACKS[@}]}" =~ "${WorkflowID}" ]]
+            if [[ "${STACKS[@]}" =~ "${WorkflowID}" ]]
             then
               aws s3 rm "s3://udapeoplebucket-${WorlkflowID}" --recursive
               aws cloudformation delete-stack --stack-name "udapeople-backend-${WorkflowID}"
