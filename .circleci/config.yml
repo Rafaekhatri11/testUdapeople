@@ -392,6 +392,7 @@ jobs:
           name: Update cloudfront distribution
           working_directory: ./.circleci/files
           command: |
+            echo "WorkflowID=${WorkflowID}"
             aws cloudformation deploy \
               --template-file cloudfront.yml \
               --stack-name udapeople-cloudfront-production \
@@ -399,9 +400,9 @@ jobs:
               --tags project=udapeople &
             if [[ "${STACKS[@]}" =~ "${WorkflowID}" ]]
             then
-              aws s3 rm "s3://udapeoplebucket-${WorkflowID}" --recursive
-              aws cloudformation delete-stack --stack-name "udapeople-backend-${WorkflowID}"
-              aws cloudformation delete-stack --stack-name "udapeople-frontend-${WorkflowID}"
+              aws s3 rm "s3://udapeoplebucket-1010" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-backend-1010"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-1010"
             fi
       - revert_migrations:
           id: <<pipeline.parameters.workflow-id>>
