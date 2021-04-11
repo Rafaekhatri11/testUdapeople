@@ -80,12 +80,12 @@ jobs:
           command: |
             cd frontend
             npm audit --audit-level=critical
-      # - slack/notify:
-      #     event: fail
-      #     template: basic_fail_1
-      # - slack/notify:
-      #     event: pass
-      #     template: success_tagged_deploy_1
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
   scan-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -98,12 +98,12 @@ jobs:
           command: |
             cd backend
             npm audit --audit-level=critical
-      # - slack/notify:
-      #     event: fail
-      #     template: basic_fail_1
-      # - slack/notify:
-      #     event: pass
-      #     template: success_tagged_deploy_1 
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1 
   deploy-infrastructure:
     docker:
       # Docker image here that supports AWS CLI
@@ -148,12 +148,12 @@ workflows:
           requires: [build-frontend]
     - test-backend:
           requires: [build-backend]
-    - scan-backend:
-          requires: [build-backend]
-    - scan-frontend:
-          requires: [build-frontend]
-    - deploy-infrastructure:
-          requires: [test-frontend, test-backend]
-          filters:
-            branches:
-              only: [test-feature-branch]
+    # - scan-backend:
+    #       requires: [build-backend]
+    # - scan-frontend:
+    #       requires: [build-frontend]
+    # - deploy-infrastructure:
+    #       requires: [test-frontend, test-backend]
+    #       filters:
+    #         branches:
+    #           only: [test-feature-branch]
